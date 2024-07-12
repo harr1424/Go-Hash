@@ -11,7 +11,7 @@ import (
 	"github.com/tidwall/gjson"
 )
 
-const refreshHashInSeconds = 60
+const REFRESH_HASH_SECONDS = 60
 
 func downloadAndHashImage(url string) (string, error) {
 	resp, err := http.Get(url)
@@ -44,7 +44,7 @@ func downloadAndHashImages(config gjson.Result) {
 
 		state.mu.Unlock()
 
-		time.Sleep(time.Duration(refreshHashInSeconds) * time.Second)
+		time.Sleep(time.Duration(REFRESH_HASH_SECONDS) * time.Second)
 	}
 }
 

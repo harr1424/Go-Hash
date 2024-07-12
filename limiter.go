@@ -10,6 +10,9 @@ import (
 	"golang.org/x/time/rate"
 )
 
+const NUM_REQUESTS = 2
+const NUM_SECONDS = 20
+
 type RateLimiter struct {
 	limiters map[string]*rate.Limiter
 	mu       sync.Mutex
@@ -49,7 +52,7 @@ func (r *RateLimiter) GetLimiter(ip string) *rate.Limiter {
 
 	limiter, exists := r.limiters[ip]
 	if !exists {
-		limiter = rate.NewLimiter(rate.Every(20*time.Second), 2) // 2 requests every 20 seconds
+		limiter = rate.NewLimiter(rate.Every(NUM_SECONDS*time.Second), NUM_REQUESTS) // 2 requests every 20 seconds
 		r.limiters[ip] = limiter
 	}
 
